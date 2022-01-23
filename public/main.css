@@ -21,6 +21,7 @@
 #yourNameInput {
 	display: inline;
 	width: 100%;
+	font-size: 2rem;
 }
 
 .autocomplete > div:hover:not(.group), .autocomplete > div.selected {
@@ -31,6 +32,7 @@
 
 #saveNameBtn {
 	width: 50%;
+	font-size: 2rem;
 }
 
 #trackerDateInput {
@@ -109,5 +111,9 @@
 
 	#trackerDateInput {
 		width: 100%;
+	}
+
+	#yourNameInput, #saveNameBtn {
+		font-size: 1rem;
 	}
 }
