@@ -56,7 +56,7 @@ app.use(bodyparser.json());
 app.use(cookieparser());
 
 app.use((req, res, next) => {
-	if(req.secure || process.env.NODE_ENV === "local"){
+	if((req.secure || req.headers["x-forwarded-proto"] === "https") || process.env.NODE_ENV === "local"){
 		// request was via https, so do no special handling
 		next();
 	} else {
