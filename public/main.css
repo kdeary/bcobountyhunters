@@ -1,0 +1,113 @@
+.heading {
+	display: block;
+	text-align: center;
+}
+
+.logo {
+	height: 50vh;
+}
+
+.auto-complete-group {
+	display: inline-flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	width: 100%;
+}
+
+.auto-complete-container {
+	width: 100%;
+}
+
+#yourNameInput {
+	display: inline;
+	width: 100%;
+}
+
+.autocomplete > div:hover:not(.group), .autocomplete > div.selected {
+	background: #eee;
+	color: #111;
+	cursor: pointer;
+}
+
+#saveNameBtn {
+	width: 50%;
+}
+
+#trackerDateInput {
+	display: block;
+	margin: 0 auto;
+	width: 50%;
+	font-size: 3rem;
+	text-align: center;
+	border-radius: 16px;
+	border: 5px solid #999;
+}
+
+.cq-tracker {
+	font-size: 1.75rem;
+}
+
+.cq-tracker .current-shift {
+	background-color: #303550;
+}
+
+.cq-tracker .current-shift small {
+	color: #ddd;
+}
+
+.cq-tracker .current-shift.top .name,
+.cq-tracker .current-shift.top .room {
+	border-color: #eee;
+}
+
+.cq-tracker .time {
+	width: 40%;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.cq-tracker .room {
+	width: 20%;
+}
+
+.cq-tracker .name {
+	width: 40%;
+	font-size: 1.6rem;
+}
+
+.cq-tracker small {
+	color: #555;
+	font-size: 1rem;
+}
+
+#shiftsTab {
+	font-size: 2rem;
+}
+
+@media (max-width:801px) {
+	.logo {
+		width: 50%;
+		height: auto;
+	}
+
+	.heading h1 {
+		font-size: 1.5rem;
+	}
+
+	.cq-tracker {
+		font-size: 1.25rem;
+	}
+
+	.cq-tracker .name {
+		width: 40%;
+		font-size: 1.25rem;
+	}
+
+	#shiftsTab {
+		font-size: 1rem;
+	}
+
+	#trackerDateInput {
+		width: 100%;
+	}
+}

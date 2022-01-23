@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/cyborg/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/main.css">
+		<link rel="stylesheet" type="text/css" href="/admin/admin.css">
+
+		<title>B Co. CQ Tracker - Admin</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="heading">
+				<img class="logo" src="/assets/logo.png">
+				<h2 class="text-center">Bounty Hunters CQ Tracker Dashboard</h2>
+			</div>
+			<hr />
+			<div class="row">
+				<div class="col-8">
+					<h3>CQ Shifts Extractor Tool</h3>
+					<hr>
+					<div class="form-group">
+						<label for="cqImageInput">CQ Image: </label>
+						<input type="file" id="cqImageInput" accept="image/*" />
+					</div>
+
+					<canvas class="perspective-canvas" id="perspectiveEditorCanvas"></canvas>
+					<div class="editor-controls my-2">
+						<button class="btn btn-info btn-lg" id="expandBtn">Expand Editor</button>
+						<button class="btn btn-danger btn-lg" id="minimizeBtn">Minimize Editor</button>
+						<button class="btn btn-primary btn-lg" id="extractBtn">Extract Shifts</button>
+						<button class="btn btn-danger btn-lg" id="cancelExtractBtn">Cancel Extract</button>
+					</div>
+					<canvas class="perspective-canvas" id="perspectiveOutputCanvas"></canvas>
+					<hr>
+					<h3>Database Controls</h3>
+					<hr>
+					<button class="btn btn-primary btn-lg" id="updateLastUpdateBtn">Change "Last Update" Date</button>
+				</div>
+				<div class="col-4">
+					<h4>Console</h4>
+					<hr>
+					<textarea id="consoleText" readonly></textarea>
+				</div>
+			</div>
+			<hr />
+			<h3 class="text-center">Database</h3>
+			<hr>
+			<small class="text-danger" id="databaseStatusText"></small>
+			<textarea id="databaseText"></textarea>
+			<button class="btn btn-primary btn-lg" id="updateDatabaseBtn">Update Database</button>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="/vendor/tesseract.min.js"></script>
+		<script type="text/javascript" src="/vendor/glfx.min.js"></script>
+		<script type="text/javascript" src="/vendor/dragger.js"></script>
+		<script type="text/javascript" src="/vendor/jsonparse.js"></script>
+		<script type="text/javascript" src="/admin/CQ_IMAGE_POINTS.js"></script>
+		<script type="text/javascript" src="/admin/utils.js"></script>
+		<script type="text/javascript" src="/admin/admin.js"></script>
+	</body>
+</html>

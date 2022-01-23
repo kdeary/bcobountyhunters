@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta property="og:title" content="Bounty Hunter CQ Tracker" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://bravobountyhunters.club" />
+		<!-- <meta property="og:image" content="/assets/heart.svg" /> -->
+		<meta property="og:description" content="B369 CQ Shift Tracker" />
+		<meta name="theme-color" content="#111111">
+		<link rel="manifest" href="manifest.json">
+
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="https://kraaden.github.io/autocomplete/autocomplete.css">
+		<link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/cyborg/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="main.css">
+
+		<title>B Co. CQ Tracker</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="heading">
+				<img class="logo" src="/assets/logo.png">
+				<h1 class="text-center">Bounty Hunters CQ Tracker</h1>
+			</div>
+			<hr />
+			<div class="app-install-container" style="display: none">
+				<button class="btn btn-primary w-100" id="installAppBtn">Add this CQ Tracker to your Home Screen!</button>
+				<hr />
+			</div>
+			<div>
+				<ul class="nav nav-tabs flex-row" id="shiftsTab" role="tablist">
+					<li class="nav-item flex-fill text-center" role="presentation">
+						<button class="nav-link w-100 active" id="myshifts-tab" data-bs-toggle="tab" data-bs-target="#myshifts" type="button" role="tab" aria-controls="myshifts" aria-selected="true">My Upcoming Shifts</button>
+					</li>
+					<li class="nav-item flex-fill text-center" role="presentation">
+						<button class="nav-link w-100" id="formation-tab" data-bs-toggle="tab" data-bs-target="#formation" type="button" role="tab" aria-controls="formation" aria-selected="false">Formation Shifts</button>
+					</li>
+				</ul>
+				<div class="tab-content" id="shiftsTabContent">
+					<div class="tab-pane fade show active" id="myshifts" role="tabpanel" aria-labelledby="myshifts-tab">
+						<form class="auto-complete-group mt-2" id="myShiftsForm">
+							<div class="auto-complete-container">
+								<input 
+									type="search"
+									class="form-control"
+									id="yourNameInput"
+									placeholder="Your Name"
+									aria-label="Your Name"
+									aria-describedby="saveNameBtn"
+									maxlength="50"
+									dir="ltr"
+									spellcheck="false"
+									autocorrect="off"
+									autocomplete="off"
+									autocapitalize="off"
+									tabindex="1"
+								/>
+							</div>
+							<button class="btn btn-primary" type="submit" id="saveNameBtn">Save Name</button>
+						</form>
+						<div class="personal-cq-tracker-container mt-2">
+							<hr>
+
+						</div>
+					</div>
+					<div class="tab-pane fade" id="formation" role="tabpanel" aria-labelledby="formation-tab">
+						<div class="formation-cq-tracker-container mt-2">
+							<hr>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<input type="date" id="trackerDateInput" class="mb-4">
+			<p class="text-center"><small id="lastCQUpdateText"></small></p>
+			<div class="row">
+				<div class="col-md">
+					<div class="main-cq-tracker-container">
+						<table class="table cq-tracker">
+							<thead>
+								<tr>
+									<th scope="col">Time</th>
+									<th scope="col">Room</th>
+									<th scope="col">Name</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row" colspan="3">
+										<p class="text-center">Loading Shifts...</p>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-md">
+					<div class="main-cq-tracker-container">
+						<table class="table cq-tracker">
+							<thead>
+								<tr>
+									<th scope="col">Time</th>
+									<th scope="col">Room</th>
+									<th scope="col">Name</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row" colspan="3">
+										<p class="text-center">Loading Shifts...</p>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		<script src="https://kraaden.github.io/autocomplete/autocomplete.js"></script>
+
+		<script type="text/javascript" src="/settings.js"></script>
+		<script type="text/javascript" src="/utils.js"></script>
+		<script type="text/javascript" src="/cache.js"></script>
+		<script type="text/javascript" src="/main.js"></script>
+	</body>
+</html>
