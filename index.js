@@ -55,6 +55,16 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(cookieparser());
 
+app.use((req, res, next) => {
+	if(req.secure || process.env.NODE_ENV === "local"){
+		// request was via https, so do no special handling
+		next();
+	} else {
+		// request was via http, so redirect to https
+		res.redirect('https://' + req.headers.host + req.url);
+	}
+});
+
 app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, '/public/index.html'));
 });
