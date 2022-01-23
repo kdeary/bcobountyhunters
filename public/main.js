@@ -22,6 +22,7 @@ const appInstallContainer = document.querySelector('.app-install-container');
 const personalCQTrackerContainer = document.querySelector('.personal-cq-tracker-container');
 const formationCQTrackerContainer = document.querySelector('.formation-cq-tracker-container');
 const cqTrackerContainers = document.querySelectorAll('.main-cq-tracker-container');
+const lazyImageElems = document.querySelectorAll('img[data-src]');
 
 autocomplete({
 	input: yourNameInputElem,
@@ -42,6 +43,8 @@ let lastCQUpdateDate = null;
 let deferredInstallPrompt = null;
 
 personalCQTrackerContainer.style.display = "none";
+
+lazyImageElems.forEach(lazyLoadImage);
 
 (async () => {
 	initTrackerDateInput();
@@ -247,6 +250,15 @@ function getCQShifts({
 
 function getLocalCQShifts() {
 	return CACHE.fetch('shifts', null);
+}
+
+function lazyLoadImage(element) {
+	const highResURL = element.dataset.src;
+	const image = new Image();
+
+	image.onload = () => element.src = image.src;
+
+	image.src = highResURL;
 }
 
 // window.addEventListener('beforeinstallprompt', e => {
