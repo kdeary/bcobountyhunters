@@ -25,6 +25,12 @@ const DB_SCHEMA = {
 		date: 0,
 		soldiers: ["???", "???"],
 		rooms: [0, 0]
+	},
+	{
+		date: 0,
+		soldiers: [],
+		rooms: [],
+		empty: true
 	}]
 };
 

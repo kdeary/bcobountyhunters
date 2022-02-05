@@ -2,7 +2,7 @@ const HOUR_MILLISECONDS = (60 * 60 * 1000);
 const DAY_MILLISECONDS = 24 * HOUR_MILLISECONDS;
 const MINS_15_MILLISECONDS = 15 * 60000;
 
-const NO_SHIFT_BLURBS = ["lucky you...", "yay!", "nice."];
+const NO_SHIFT_BLURBS = ["lucky you...", "yay!", "nice.", "finally! some actual sleep..."];
 
 const DAY_START_DATE = editDate(new Date(), {
 	ms: 0,
@@ -150,20 +150,7 @@ function buildShiftsTableHTML(shifts) {
 		tableBody = shifts.reduce((acc, val) => {
 			const shiftedDate = val.date - MINS_15_MILLISECONDS;
 			const isCurrentShift = Date.now() > shiftedDate && Date.now() < shiftedDate + HOUR_MILLISECONDS;
-			return acc + `
-				<tr class="${isCurrentShift ? "current-shift" : ""} top">
-					<th class="time" scope="row" rowspan="2">
-						${dateToMilitaryTime(val.date)}-${dateToMilitaryTime(val.date + HOUR_MILLISECONDS)}
-						<br><small class="info">${val.info || ""}</small>
-					</th>
-					<td class="room">${val.rooms[0]}</td>
-					<td class="name">${val.soldiers[0]}</td>
-				</tr>
-				<tr class="${isCurrentShift ? "current-shift" : ""}">
-					<td class="room">${val.rooms[1]}</td>
-					<td class="name">${val.soldiers[1]}</td>
-				</tr>
-			`;
+			return acc + buildCQShiftRowHTML(val, isCurrentShift);
 		}, "");
 	} else {
 		tableBody = `
@@ -191,6 +178,38 @@ function buildShiftsTableHTML(shifts) {
 `
 }
 
+function buildCQShiftRowHTML(shift, highlighted) {
+	if(shift.empty) {
+		return `
+			<tr class="${highlighted ? "current-shift" : ""} top">
+				<th class="time" scope="row" rowspan="1">
+					${dateToMilitaryTime(shift.date)}-${dateToMilitaryTime(shift.date + HOUR_MILLISECONDS)}
+				</th>
+				<td colspan="2">Empty</td>
+			</tr>
+		`;
+	}
+
+	const nextSoldiersHTML = shift.soldiers.map((soldier, idx) => `
+		<tr class="${isCurrentShift ? "current-shift" : ""}">
+			<td class="room">${shift.rooms[idx]}</td>
+			<td class="name">${soldier}</td>
+		</tr>
+	`);
+
+	return `
+		<tr class="${isCurrentShift ? "current-shift" : ""} top">
+			<th class="time" scope="row" rowspan="${shift.soldiers.length}">
+				${dateToMilitaryTime(shift.date)}-${dateToMilitaryTime(shift.date + HOUR_MILLISECONDS)}
+				<br><small class="info">${shift.info || ""}</small>
+			</th>
+			<td class="room">${shift.rooms[0]}</td>
+			<td class="name">${shift.soldiers[0]}</td>
+		</tr>
+		${nextSoldiersHTML.join("\n")}
+	`;
+}
+
 function updatePersonalCQTable() {
 	if(!yourNameInputElem.value) return;
 	return getCQShifts({
@@ -213,7 +232,10 @@ function updateFormationCQTable() {
 			return date.getHours() === FIRST_FORMATION_HOURS_IN_WEEK[date.getDay()];
 		});
 
-		if(!firstFormation || !bedChecks) return shifts;
+		if(!firstFormation || !bedChecks) {
+			formationCQTrackerContainer.innerHTML = "<h4 class='text-center'>Formation CQ Info Not Found</h4>";
+			return shifts;
+		}
 
 		firstFormation.info = "First Formation<br>" + dateToMilitaryDate(firstFormation.date);
 		bedChecks.info = "Bed Checks<br>" + dateToMilitaryDate(bedChecks.date);

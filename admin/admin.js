@@ -167,6 +167,9 @@ async function drawAlignedImage() {
 	}
 
 	console.log(rawTextOutput);
+
+	
+	
 	const shifts = rawTextsToShifts(rawTextOutput);
 	
 	updateLocalDB({

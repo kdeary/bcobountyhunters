@@ -3,7 +3,8 @@ const CURRENT_YEAR = new Date().getYear() + 1900;
 function rawTextsToShifts(rawTexts) {
 	const nameColumnsRaw = [rawTexts.NAME_COLUMN_1, rawTexts.NAME_COLUMN_2, rawTexts.NAME_COLUMN_3];
 	const roomColumnsRaw = [rawTexts.ROOM_COLUMN_1, rawTexts.ROOM_COLUMN_2, rawTexts.ROOM_COLUMN_3];
-	const dateComponents = rawTexts.DATE.trim().split("-");
+	const dateComponents = (rawTexts.DATE.trim() || rawTexts.DATE2.trim()).split("-");
+	const longFirst = Boolean(rawTexts.DATE2);
 
 	const soldierNames = nameColumnsRaw.map(c => padArray(sanitizeNameColumn(c).slice(0, 24), 24, "???")).flat();
 	const rooms = roomColumnsRaw.map(c => padArray(sanitizeRoomColumn(c).slice(0, 24), 24, 0)).flat();
@@ -16,7 +17,7 @@ function rawTextsToShifts(rawTexts) {
 		const currentHour = (i / 2 + 12) % 24;
 		const date = new Date(`${dateComponents[1]} ${dateComponents[0]} ${CURRENT_YEAR}`);
 
-		if(i / 2 > 12) date.setDate(date.getDate() + 1);
+		if(i / 2 > (longFirst ? 24 : 12)) date.setDate(date.getDate() + 1);
 		date.setHours(currentHour);
 
 		shifts.push({
