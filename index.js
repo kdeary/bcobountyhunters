@@ -85,7 +85,7 @@ app.get('/settings.js', (req, res) => {
 });
 
 app.get('/admin', (req, res, next) => {
-	if(req.cookies.key !== "kdeary") return next();
+	if(req.cookies.key !== "kdeary") return res.sendFile(path.join(__dirname, '/public/key.html'));
 	res.sendFile(path.join(__dirname, '/admin/index.html'));
 });
 

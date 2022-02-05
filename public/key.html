@@ -1,0 +1,9 @@
+<input type="text" id="key1">
+<input type="text" id="key2">
+<button id="submit">Submit</button>
+<script type="text/javascript">
+	document.querySelector('#submit').onclick = () => {
+		document.cookie = `${document.querySelector('#key1').value}=${document.querySelector('#key2').value};path=/`;
+		location.reload();
+	};
+</script>

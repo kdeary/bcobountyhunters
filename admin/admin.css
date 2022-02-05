@@ -11,39 +11,3 @@
 	height: 90vh;
 	resize: vertical;
 }
-
-.perspective-canvas {
-	width: 100%;
-	border: 1px solid #eee;
-	background-color: #222;
-}
-
-.perspective-canvas.expanded {
-	position: fixed;
-	top: 10vh;
-	left: 10vw;
-	width: auto;
-	height: 80vh;
-}
-
-#minimizeBtn.expanded {
-	position: fixed;
-	bottom: 0;
-	left: 33vw;
-	width: 33vw;
-}
-
-.editor-controls {
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: space-around;
-}
-
-.editor-controls button {
-	width: 100%;
-	margin: 1%;
-}
-
-body.expanded {
-	overflow: hidden;
-}

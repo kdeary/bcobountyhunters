@@ -1,0 +1,32 @@
+<div class="col-8">
+	<h3>CQ Shifts Extractor Tool</h3>
+	<hr>
+	<div class="form-group">
+		<label for="cqImageInput">CQ Image: </label>
+		<input type="file" id="cqImageInput" accept="image/*" />
+	</div>
+
+	<canvas class="perspective-canvas" id="perspectiveEditorCanvas"></canvas>
+	<div class="editor-controls my-2">
+		<button class="btn btn-info btn-lg" id="expandBtn">Expand Editor</button>
+		<button class="btn btn-danger btn-lg" id="minimizeBtn">Minimize Editor</button>
+		<button class="btn btn-primary btn-lg" id="extractBtn">Extract Shifts</button>
+		<button class="btn btn-danger btn-lg" id="cancelExtractBtn">Cancel Extract</button>
+	</div>
+	<canvas class="perspective-canvas" id="perspectiveOutputCanvas"></canvas>
+	<div class="raw-column-container row">
+		
+	</div>
+	<hr>
+</div>
+<div class="col-4">
+	<h4>Console</h4>
+	<hr>
+	<textarea id="consoleText" readonly></textarea>
+</div>
+
+<script type="text/javascript" src="/admin/CQ_IMAGE_POINTS.js"></script>
+
+<script type="text/javascript" src="/vendor/tesseract.min.js"></script>
+		<script type="text/javascript" src="/vendor/glfx.min.js"></script>
+		<script type="text/javascript" src="/vendor/dragger.js"></script>
