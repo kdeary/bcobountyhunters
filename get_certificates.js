@@ -24,24 +24,23 @@ const heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN });
 initJSONBin();
 
 const retrieveCerts = async ({domains}) => {
-	let pems = await fetchCertsFromJSONBin();
-	let certificate = pems ? new X509Certificate(Buffer.from(pems.cert + '\n' + pems.chain + '\n')) : null;
+	let certs = await fetchCertsFromJSONBin();
+	let certificate = certs ? new X509Certificate(Buffer.from(certs.cert + '\n' + certs.chain + '\n')) : null;
+	const expiryDate = certificate ? new Date(certificate.validTo) : null;
 
-	console.log(certificate);
+	console.log("CERTIFICATE: ", certificate);
 
-	if(!certificate) {
+	if(!certificate || new Date().getTime() > expiryDate.getTime()) {
 		console.log("Creating new certificates...");
-		pems = await createCerts({domains}).catch(console.error);
+		certs = await createCerts({domains}).catch(console.error);
 		console.log("Saving certs to JSONBin");
-		await saveCertsToJSONBin(pems);
-
-		console.log(pems);
+		await saveCertsToJSONBin(certs);
 
 		console.log("Updating Heroku SSL");
 		await heroku.post(`/apps/${process.env.HEROKU_APP}/ssl-endpoints`, {
 			body: {
-				certificate_chain: pems.cert + '\n' + pems.chain + '\n',
-				private_key: pems.privkey,
+				certificate_chain: certs.certificate_chain,
+				private_key: certs.private_key,
 				preprocess: true
 			}
 		}).then(data => {
@@ -49,16 +48,11 @@ const retrieveCerts = async ({domains}) => {
 		}).catch(console.error);
 	}
 
-	await fs.promises.writeFile('./cert/privkey.pem', pems.privkey, 'ascii');
-	await fs.promises.writeFile('./cert/fullchain.pem', pems.cert + '\n' + pems.chain + '\n', 'ascii');
+	await fs.promises.writeFile('./cert/fullchain.pem', certs.cert + '\n' + certs.chain + '\n', 'ascii');
 
 	console.log("Wrote SSL certs to disk.");
 
-	return {
-		...pems,
-		key: pems.privkey,
-		fullchain: pems.cert + '\n' + pems.chain + '\n'
-	};
+	return certs;
 };
 
 const createCerts = async ({domains}) => {
@@ -75,7 +69,7 @@ const createCerts = async ({domains}) => {
 		}
 	});
 
-	await acme.init('https://acme-v02.api.letsencrypt.org/directory');
+	await acme.init('https://acme-staging-v02.api.letsencrypt.org/directory');
 	console.log("Initiated ACME");
 
 	let accountObj = await fetchAccountFromJSONBin();
@@ -88,7 +82,7 @@ const createCerts = async ({domains}) => {
 		await saveAccountToJSONBin(accountObj);
 	}
 
-	const {account, accountKey, serverKey} = accountObj;
+	const {account, accountKey, serverKey, serverPem} = accountObj;
 
 	console.info('Account:', account);
 
@@ -110,7 +104,11 @@ const createCerts = async ({domains}) => {
 
 	console.log("Generated Certificates");
 
-	return pems;
+	return {
+		...pems,
+		private_key: serverPem,
+		certificate_chain: pems.cert + '\n' + pems.chain + '\n'
+	};
 };
 
 function initJSONBin() {

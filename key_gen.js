@@ -6,7 +6,7 @@ const generateAccount = async (acme, accountSettings) => {
 	let serverKey;
 
 	let accountPemFile = await fs.promises.readFile('./cert/account_privkey.pem').then(r => r.toString()).catch(() => null);
-	let serverPemFile = await fs.promises.readFile('./cert/server_privkey.pem').then(r => r.toString()).catch(() => null);
+	let serverPemFile = await fs.promises.readFile('./cert/privkey.pem').then(r => r.toString()).catch(() => null);
 	let accountFile = await fs.promises.readFile('./cert/account.json').catch(() => null);
 
 	if(accountPemFile) {
@@ -24,7 +24,7 @@ const generateAccount = async (acme, accountSettings) => {
 		let serverKeypair = await Keypairs.generate({ kty: 'RSA', format: 'jwk' });
 		serverKey = serverKeypair.private;
 		let serverPem = await Keypairs.export({ jwk: serverKey });
-		await fs.promises.writeFile('./cert/server_privkey.pem', serverPem, 'ascii');
+		await fs.promises.writeFile('./cert/privkey.pem', serverPem, 'ascii');
 	}
 
 	let account;
@@ -39,7 +39,7 @@ const generateAccount = async (acme, accountSettings) => {
 		await fs.promises.writeFile('./cert/account.json', JSON.stringify(account), 'ascii');
 	}
 
-	return {account, serverKey, accountKey};
+	return {account, serverKey, serverPem, accountKey};
 };
 
 export {generateAccount};
