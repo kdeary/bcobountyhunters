@@ -50,7 +50,7 @@ if(!fs.existsSync('./cert')){
     console.log("Created cert directory");
 }
 
-if(process.env.NODE_ENV === "local") {
+if(process.env.NODE_ENV === "local" || true) {
 	httpServer = http.createServer(app);
 } else {
 	httpServer = http.createServer(app);
