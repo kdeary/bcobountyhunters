@@ -202,7 +202,7 @@ app.post('/database', async (req, res) => {
 });
 
 app.use('/', express.static(path.join(__dirname, 'public')));
-app.use('/admin', clientCertificateAuth(console.log), (req, res, next) => {
+app.use('/admin', (req, res, next) => {
 	if(req.cookies.key === "kdeary") return next();
 }, express.static(path.join(__dirname, 'admin')));
 
