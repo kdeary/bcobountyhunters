@@ -1,3 +1,7 @@
+body {
+	margin-bottom: 1rem;
+}
+
 #consoleText {
 	font-family: monospace;
 	width: 100%;
@@ -5,9 +9,18 @@
 	resize: none;
 }
 
-#databaseText {
-	font-family: monospace;
+.database-editor-container {
 	width: 100%;
 	height: 90vh;
-	resize: vertical;
+}
+
+.shift-editor-container {
+	font-family: monospace;
+	width: 100%;
+	height: 80vh;
+	margin-bottom: 1rem;
+}
+
+.jexcel_content {
+	overflow-x: hidden !important;
 }

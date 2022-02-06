@@ -1,34 +1,5 @@
 const CURRENT_YEAR = new Date().getYear() + 1900;
-
-function rawTextsToShifts(rawTexts) {
-	const nameColumnsRaw = [rawTexts.NAME_COLUMN_1, rawTexts.NAME_COLUMN_2, rawTexts.NAME_COLUMN_3];
-	const roomColumnsRaw = [rawTexts.ROOM_COLUMN_1, rawTexts.ROOM_COLUMN_2, rawTexts.ROOM_COLUMN_3];
-	const dateComponents = (rawTexts.DATE.trim() || rawTexts.DATE2.trim()).split("-");
-	const longFirst = Boolean(rawTexts.DATE2);
-
-	const soldierNames = nameColumnsRaw.map(c => padArray(sanitizeNameColumn(c).slice(0, 24), 24, "???")).flat();
-	const rooms = roomColumnsRaw.map(c => padArray(sanitizeRoomColumn(c).slice(0, 24), 24, 0)).flat();
-
-	// console.log(roomColumnsRaw[0].split("\n"), soldierNames, rooms);
-
-	let shifts = [];
-
-	for (let i = soldierNames.length - 1; i >= 0; i -= 2) {
-		const currentHour = (i / 2 + 12) % 24;
-		const date = new Date(`${dateComponents[1]} ${dateComponents[0]} ${CURRENT_YEAR}`);
-
-		if(i / 2 > (longFirst ? 24 : 12)) date.setDate(date.getDate() + 1);
-		date.setHours(currentHour);
-
-		shifts.push({
-			"date": Number(date),
-			"soldiers": [soldierNames[i], soldierNames[i-1]],
-			"rooms": [rooms[i], rooms[i-1]],
-		});
-	}
-
-	return shifts;
-}
+const DAY_MILLISECONDS = 24 * 60 * 60 * 1000;
 
 function stringifyDatabase(db) {
 	const newDB = {
@@ -47,52 +18,98 @@ function stringifyDatabase(db) {
 	return dbStr;
 }
 
-function sanitizeNameColumn(rawText) {
-	return rawText.split("\n").filter(l => l !== "").map(s => pipeTrim(s).replace(/\|/g, "").trim());
+function shiftsToSheetData(shifts) {
+	return shifts.reduce((acc, s) => {
+		if(s.empty) return acc.concat([[dateToDDMMM0000(s.date), '', '']]);
+
+		return acc.concat(s.soldiers.map((soldier, idx) => [idx === 0 ? dateToDDMMM0000(s.date) : '', s.rooms[idx], soldier]));
+	}, []);
 }
 
-function sanitizeRoomColumn(rawText) {
-	return rawText.split("\n").filter(l => l !== "").map(s => s.replace(/\D/g, "").trim().slice(0, 3));
+function sheetDataToShifts(sheetData) {
+	let lastDate = new Date("Invalid Date");
+	let shifts = {};
+
+	for (let i = 0; i < sheetData.length; i++) {
+		const shiftDate = sheetData[i][0] ? DDMMM0000ToDate(sheetData[i][0]) : lastDate;
+
+		if(!isValidDate(shiftDate)) throw `Error: Invalid Date on line #${i+1} ('${sheetData[i].join("','")}')`;
+
+		if(sheetData[i][1] === "" || sheetData[i][2] === "") {
+			if(!shifts[shiftDate]) shifts[shiftDate] = {date: Number(shiftDate), soldiers: [], rooms: [], empty: true};
+			continue;
+		}
+
+		if(!shifts[shiftDate]) shifts[shiftDate] = {date: Number(shiftDate), soldiers: [], rooms: []};
+
+		shifts[shiftDate].rooms.push(sheetData[i][1]);
+		shifts[shiftDate].soldiers.push(sheetData[i][2]);
+
+		lastDate = shiftDate;
+	}
+
+	return Object.values(shifts);
 }
 
-function pipeTrim(rawSoldier) {
-	let pipeIndex = rawSoldier.indexOf("|");
-	return rawSoldier.slice(pipeIndex > -1 ? pipeIndex : undefined);
+function reformatSheetData(sheetData, impliedDate) {
+	let currentImpliedDate = impliedDate;
+
+	const shiftLines = sheetData.map((line, idx) => {
+		let date = line[0];
+		if(date.length === 0) {
+		} else if(date.length > 0) {
+			if(date.includes('-')) date = cqDateToDDMMM0000(date, currentImpliedDate)
+			else if(date.length === 9) {}
+		}
+
+		if(date.endsWith("2300")) currentImpliedDate = new Date(currentImpliedDate.getTime() + DAY_MILLISECONDS);
+
+		return [
+			date.replace(/[^\w .,]+/gi, ""),
+			line[1],
+			line[2].replace(/[^\w .,]+/gi, "")
+		];
+	});
+
+	return trimSpreadsheet(shiftLines);
 }
 
-function padArray(arr, len, fill) {
-	return arr.concat(Array(Math.max(arr.length - len, 0)).fill(fill));
+function trimSpreadsheet(grid) {
+	let lastEmptyIndex = grid.reverse().findIndex(l => l.join("").length !== 0) - 1;
+	if(lastEmptyIndex < 0) return grid.reverse();
+
+	console.log(grid);
+
+	return grid.slice(lastEmptyIndex).reverse();
 }
 
-function distance(p1, p2) {
-	return Math.sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2);
+function mergeShifts(...shiftArrs) {
+	return Object.values(shiftArrs.flat().reduce((acc, s) => ({
+		...acc,
+		[s.date]: s
+	}), {}));
 }
 
-function strokeCircle(ctx, point, radius) {
-	ctx.beginPath();
-	ctx.arc(point[0], point[1], radius, 0, 2 * Math.PI);
-	ctx.stroke();
+function checkShiftsValidness(data) {
+	// Generate tooltip content for each problem
+	const titles = data.map(line => [
+		checkShiftTime,
+		checkShiftRoom,
+		() => {}
+	].map((func, idx) => func(line[idx])));
+
+	// Display the cell as invalid if there's a problem
+	const classNames = data.map(
+		(line, index) => line.map((cell, idx) => titles[index][idx] ? "invalid" : line[idx] && "valid")
+	);
+
+	return { titles, classNames };
 }
 
-function toTesseractRect(rect) {
-	return {
-		left: rect[0],
-		top: rect[1],
-		width: rect[2],
-		height: rect[3]
-	};
+function checkShiftTime(time) {
+	return time.length !== 0 && time.length > 9 ? "Invalid date" : undefined;
 }
 
-function cloneCanvas(oldCanvas) {
-	let newCanvas = document.createElement('canvas');
-	let context = newCanvas.getContext('2d');
-	newCanvas.width = oldCanvas.width;
-	newCanvas.height = oldCanvas.height;
-	context.drawImage(oldCanvas, 0, 0);
-
-	return newCanvas;
-}
-
-function toAbsoluteRect(rect, dimensions) {
-	return rect.map((n, idx) => n * dimensions[idx % 2]);
+function checkShiftRoom(room) {
+	return room.length !== 0 && room.length > 3 || isNaN(Number(room)) ? "Invalid Room #" : undefined;
 }

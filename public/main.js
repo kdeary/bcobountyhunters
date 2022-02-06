@@ -1,6 +1,7 @@
 const HOUR_MILLISECONDS = (60 * 60 * 1000);
 const DAY_MILLISECONDS = 24 * HOUR_MILLISECONDS;
 const MINS_15_MILLISECONDS = 15 * 60000;
+const MAX_DATE = new Date(8640000000000000);
 
 const NO_SHIFT_BLURBS = ["lucky you...", "yay!", "nice.", "finally! some actual sleep..."];
 
@@ -51,7 +52,7 @@ lazyImageElems.forEach(lazyLoadImage);
 
 	yourNameInputElem.value = CACHE.fetch('name', "").trim();
 
-	const localShifts = processShifts(getLocalCQShifts());
+	const localShifts = processShifts(getLocalCQShifts() || []);
 	renderAll(localShifts);
 
 	// Today's Shifts
@@ -76,6 +77,8 @@ trackerDateInputElem.addEventListener('change', async (event) => {
 		minutes: 0,
 		hours: 0
 	});
+
+	if(!inputDate) return;
 
 	renderShiftsTable("loading");
 	const shifts = processShifts(await getCQShifts({
@@ -185,20 +188,20 @@ function buildCQShiftRowHTML(shift, highlighted) {
 				<th class="time" scope="row" rowspan="1">
 					${dateToMilitaryTime(shift.date)}-${dateToMilitaryTime(shift.date + HOUR_MILLISECONDS)}
 				</th>
-				<td colspan="2">Empty</td>
+				<td colspan="2"><p class="text-center m-0">Empty Shift</p></td>
 			</tr>
 		`;
 	}
 
-	const nextSoldiersHTML = shift.soldiers.map((soldier, idx) => `
-		<tr class="${isCurrentShift ? "current-shift" : ""}">
+	const nextSoldiersHTML = shift.soldiers.slice(1).map((soldier, idx) => `
+		<tr class="${highlighted ? "current-shift" : ""} ${idx !== shift.soldiers.length - 2 ? "top" : ""}">
 			<td class="room">${shift.rooms[idx]}</td>
 			<td class="name">${soldier}</td>
 		</tr>
 	`);
 
 	return `
-		<tr class="${isCurrentShift ? "current-shift" : ""} top">
+		<tr class="${highlighted ? "current-shift" : ""} top">
 			<th class="time" scope="row" rowspan="${shift.soldiers.length}">
 				${dateToMilitaryTime(shift.date)}-${dateToMilitaryTime(shift.date + HOUR_MILLISECONDS)}
 				<br><small class="info">${shift.info || ""}</small>
@@ -213,7 +216,8 @@ function buildCQShiftRowHTML(shift, highlighted) {
 function updatePersonalCQTable() {
 	if(!yourNameInputElem.value) return;
 	return getCQShifts({
-		soldier: yourNameInputElem.value
+		soldier: yourNameInputElem.value,
+		toDate: MAX_DATE
 	}).then(shifts => {
 		shifts = shifts.map(s => ({...s, info: dateToMilitaryDate(s.date)}));
 
@@ -249,6 +253,7 @@ function updateFormationCQTable() {
 
 function getCQShifts({
 	date=null,
+	toDate=null,
 	soldier=""
 }={}) {
 	if(date === null) date = DAY_START_DATE;
@@ -259,7 +264,7 @@ function getCQShifts({
 
 	// console.log(date, Number(date), Number(date) + DAY_MILLISECONDS);
 
-	return fetch(`/shifts?from=${Number(date)}&to=${Number(date) + DAY_MILLISECONDS - 1}&soldier=${soldier}`)
+	return fetch(`/shifts?from=${Number(date)}&to=${toDate ? Number(toDate) : Number(date) + DAY_MILLISECONDS - 1}&soldier=${soldier}`)
 	.then(r => r.json())
 	.then(json => {
 		CACHE.update('shifts', json.shifts);

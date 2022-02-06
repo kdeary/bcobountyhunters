@@ -32,8 +32,42 @@ function dateToMilitaryDate(input) {
 	return dateNumStr + monthStr;
 }
 
+function DDMMM0000ToDate(formatted) {
+	return new Date(`${formatted.slice(0, 5)}${String(CURRENT_YEAR)} ${formatted.slice(5, 7)}:${formatted.slice(7, 9)}`);
+}
+
+function cqDateToDDMMM0000(rawDate, impliedDate) {
+	if(!impliedDate) throw "Error: No implied date given.";
+
+	let date = new Date(impliedDate);
+	const cqHour = Number(rawDate.slice(0, 2));
+	date.setHours(cqHour, 0, 0, 0);
+
+	return dateToDDMMM0000(date);
+}
+
 function dateToYYYYMMDD(date) {
-	return date.toISOString().split('T')[0];
+	return new Date(date).toLocaleDateString('en-CA');
+}
+
+function dateToDDMMM0000(date) {
+	const dateArr = new Date(date).toLocaleString('en-US', {
+		day: 'numeric',
+		month: 'short',
+		hour: 'numeric',
+		minute: 'numeric',
+		hour12: false
+	}).toUpperCase().replace(":", "").split(",");
+
+	if(dateArr.length === 1) return "00ERR0000";
+
+	const time = dateArr[1].startsWith(" 24") ? "00" + dateArr[1].slice(3) : dateArr[1].slice(1);
+
+	return dateArr[0].slice(4).padStart(2, '0') + dateArr[0].slice(0, 3) + time;
+}
+
+function isValidDate(d) {
+	return d instanceof Date && !isNaN(d);
 }
 
 function dateValueToDate(value) {
