@@ -52,6 +52,7 @@ if(!fs.existsSync('./cert')){
 
 if(process.env.NODE_ENV === "local" || true) {
 	httpServer = http.createServer(app);
+	startListener(httpServer);
 } else {
 	httpServer = http.createServer(app);
 	httpServer = httpShutdown(httpServer);
