@@ -73,7 +73,7 @@ const createCerts = async ({domains}) => {
 		}
 	});
 
-	await acme.init('https://acme-staging-v02.api.letsencrypt.org/directory');
+	await acme.init('https://acme-v02.api.letsencrypt.org/directory');
 	console.log("Initiated ACME");
 
 	let accountObj = await fetchAccountFromJSONBin();
@@ -105,6 +105,8 @@ const createCerts = async ({domains}) => {
 		domains,
 		challenges
 	}).catch(console.error);
+
+	console.log("Generated Certificates");
 
 	return pems;
 };
