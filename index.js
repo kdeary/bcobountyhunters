@@ -57,11 +57,11 @@ if(process.env.NODE_ENV === "local") {
 		const pems = await retrieveCerts({domains});
 		console.log({pems});
 
-		if(!(pems && pems.privkey && pems.cert && pems.chain)) return console.error("Couldn't get certs");
+		if(!(pems && pems.certificate_chain && pems.private_key)) return console.error("Couldn't get certs");
 
 		credentials = {
-			key: pems.key,
-			cert: pems.fullchain,
+			key: pems.private_key,
+			cert: pems.certificate_chain,
 			// issuer/CA certificate against which the client certificate will be
 			// validated. A certificate that is not signed by a provided CA will be
 			// rejected at the protocol layer.
