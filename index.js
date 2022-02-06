@@ -56,6 +56,8 @@ if(process.env.NODE_ENV === "local") {
 	httpServer = http.createServer(app);
 	httpServer = httpShutdown(httpServer);
 
+	startListener(httpServer);
+
 	(async () => {
 		const pems = await retrieveCerts({domains});
 		console.log({pems});
@@ -82,11 +84,9 @@ if(process.env.NODE_ENV === "local") {
 
 		httpServer.shutdown(err => {
 			if(err) throw err;
-			
-			setTimeout(() => {
-				httpServer = https.createServer(credentials, app);
-				startListener(httpServer);
-			}, 3000);
+
+			httpServer = https.createServer(credentials, app);
+			startListener(httpServer);
 		});
 	})();
 }
@@ -216,8 +216,6 @@ app.use('/admin', clientCertificateAuth(console.log), (req, res, next) => {
 	updateDBDependents();
 
 	await repeatUntil(() => {}, () => httpServer);
-
-	startListener(httpServer);
 })();
 
 function startListener(server) {
