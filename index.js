@@ -9,6 +9,7 @@ import http from 'http';
 import https from 'https';
 import bodyparser from 'body-parser';
 import cookieparser from 'cookie-parser';
+import clientCertificateAuth from 'client-certificate-auth';
 import { query, validationResult } from 'express-validator';
 import express from 'express';
 
@@ -39,7 +40,7 @@ const app = express();
 let credentials;
 let httpServer;
 
-if(process.env.NODE_ENV === "local" || process.env.NODE_ENV === "heroku") {
+if(process.env.NODE_ENV === "local") {
 	httpServer = http.createServer(app);
 } else {
 	credentials = require('../valid_ssl')();
@@ -156,7 +157,7 @@ app.post('/database', async (req, res) => {
 });
 
 app.use('/', express.static(path.join(__dirname, 'public')));
-app.use('/admin', (req, res, next) => {
+app.use('/admin', clientCertificateAuth(console.log), (req, res, next) => {
 	if(req.cookies.key === "kdeary") return next();
 }, express.static(path.join(__dirname, 'admin')));
 
