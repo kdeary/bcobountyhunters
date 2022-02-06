@@ -1,5 +1,5 @@
 import { Octokit } from '@octokit/core';
-const octokit = new Octokit({ auth: `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` });
+const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 class GitHubAdapter {
 	read() {
@@ -10,12 +10,10 @@ class GitHubAdapter {
 	}
 
 	async write(data) {
-		awai
-
 		return octokit.request('PUT /repos/{owner}/{repo}/contents/{path}', {
-			owner: 'kdeary',
-			repo: 'bcobountyhunters_database',
-			path: 'db.json',
+			owner: process.env.GITHUB_REPO_OWNER,
+			repo: process.env.GITHUB_REPO_NAME,
+			path: process.env.GITHUB_DATABASE_FILE_NAME,
 			message: 'Database Updated',
 			content,
 			sha
@@ -25,9 +23,9 @@ class GitHubAdapter {
 
 function readDBFile() {
 	return octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-		owner: 'kdeary',
-		repo: 'bcobountyhunters_database',
-		path: 'db.json'
+		owner: process.env.GITHUB_REPO_OWNER,
+		repo: process.env.GITHUB_REPO_NAME,
+		path: process.env.GITHUB_DATABASE_FILE_NAME
 	}).then(r => r.json).then(json => {
 		console.log(json);
 		return json.data.content;
