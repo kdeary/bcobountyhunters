@@ -71,7 +71,7 @@ const createCerts = async ({domains}) => {
 		}
 	});
 
-	await acme.init('https://acme-v02.api.letsencrypt.org/directory');
+	await acme.init('https://acme-staging-v02.api.letsencrypt.org/directory');
 	console.log("Initiated ACME");
 
 	let accountObj = await fetchAccountFromJSONBin();
