@@ -61,14 +61,27 @@ function normalizeSheetData(sheetData) {
 	if(!isValidDate(cqDate)) cqDate = null;
 	console.log(cqDate);
 
-	const times = findColumnsData(cell => DAYS_OF_THE_WEEK.includes(cell.trim()), sheetData).flat();
-	const rooms = findColumnsData(cell => cell === "rm#", sheetData).flat();
-	const soldiers = findColumnsData(cell => cell === "name", sheetData).flat();
+	const soldiersColumns = findColumnsData(cell => cell === "name", sheetData);
+	const timesColumns = findColumnsData(cell => DAYS_OF_THE_WEEK.includes(cell.trim()), sheetData);
+	const roomsColumns = findColumnsData(cell => cell === "rm#", sheetData);
+
+	let soldiers = soldiersColumns.map(c => trimArray(c));
+	const columnLength = soldiers[0].length;
+	soldiers = soldiers.flat();
+	const times = timesColumns.map(c => c.slice(0, columnLength)).flat();
+	const rooms = roomsColumns.map(c => c.slice(0, columnLength)).flat();
+
+	console.log(soldiersColumns, timesColumns, roomsColumns);
+	console.log(soldiers, times, rooms);
 
 	const newGrid = [];
 
 	for (let i = 0; i < times.length; i++) {
-		newGrid.push([times[i], rooms[i], soldiers[i] || ""]);
+		newGrid.push([
+			times[i],
+			rooms[i],
+			soldiers[i] || ""
+		]);
 	}
 
 	console.log(newGrid);
@@ -108,9 +121,18 @@ function trimSpreadsheet(grid) {
 	let lastEmptyIndex = grid.reverse().findIndex(l => l.join("").length !== 0) - 1;
 	if(lastEmptyIndex < 0) return grid.reverse();
 
-	console.log(grid);
+	// console.log(grid);
 
 	return grid.slice(lastEmptyIndex).reverse();
+}
+
+function trimArray(arr) {
+	let lastEmptyIndex = arr.reverse().findIndex(l => l.length !== 0);
+	if(lastEmptyIndex < 0) return arr.reverse();
+
+	// console.log(arr);
+
+	return arr.slice(lastEmptyIndex).reverse();
 }
 
 function mergeShifts(...shiftArrs) {
