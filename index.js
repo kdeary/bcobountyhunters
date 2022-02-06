@@ -47,6 +47,7 @@ let httpServer;
 if(process.env.NODE_ENV === "local") {
 	httpServer = http.createServer(app);
 } else {
+	httpServer = http.createServer(app);
 	(async () => {
 		const pems = await retrieveCerts({domains});
 		console.log({pems});
@@ -70,7 +71,12 @@ if(process.env.NODE_ENV === "local") {
 			requestCert: true,
 			rejectUnauthorized: false
 		};
-		httpServer = https.createServer(credentials, app);
+
+		httpServer.close(() => {
+			httpServer = https.createServer(credentials, app);
+			startListener(httpServer);
+		});
+		setImmediate(() => {httpServer.emit('close')});
 	})();
 }
 
@@ -200,10 +206,14 @@ app.use('/admin', clientCertificateAuth(console.log), (req, res, next) => {
 
 	await repeatUntil(() => {}, () => httpServer);
 
-	httpServer.listen(PORT, () => {
+	startListener(httpServer);
+})();
+
+function startListener(server) {
+	server.listen(PORT, () => {
 		console.log('listening on *:' + PORT);
 	});
-})();
+}
 
 function updateDBDependents() {
 	const soldierHashTable = {};
