@@ -35,6 +35,8 @@ const retrieveCerts = async ({domains}) => {
 		console.log("Saving certs to JSONBin");
 		await saveCertsToJSONBin(pems);
 
+		console.log(pems);
+
 		console.log("Updating Heroku SSL");
 		await heroku.post(`/apps/${process.env.HEROKU_APP}/ssl-endpoints`, {
 			body: {

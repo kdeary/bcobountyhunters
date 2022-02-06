@@ -44,6 +44,11 @@ const app = express();
 let credentials;
 let httpServer;
 
+if(!fs.existsSync('./cert')){
+    fs.mkdirSync('./cert');
+    console.log("Created cert directory");
+}
+
 if(process.env.NODE_ENV === "local") {
 	httpServer = http.createServer(app);
 } else {
