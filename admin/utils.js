@@ -1,5 +1,6 @@
 const CURRENT_YEAR = new Date().getYear() + 1900;
 const DAY_MILLISECONDS = 24 * 60 * 60 * 1000;
+const DAYS_OF_THE_WEEK = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
 
 function stringifyDatabase(db) {
 	const newDB = {
@@ -51,7 +52,36 @@ function sheetDataToShifts(sheetData) {
 	return Object.values(shifts);
 }
 
+function normalizeSheetData(sheetData) {
+	if(sheetData[0].length === 3) return {grid: sheetData, impliedDate: null};
+
+	// Find Date on CQ Sheet
+	const cqSheetDateComponents = findDateOnCQSheet(sheetData).split("-");
+	let cqDate = new Date(`${cqSheetDateComponents[1]} ${cqSheetDateComponents[0]} ${CURRENT_YEAR}`);
+	if(!isValidDate(cqDate)) cqDate = null;
+	console.log(cqDate);
+
+	const times = findColumnsData(cell => DAYS_OF_THE_WEEK.includes(cell.trim()), sheetData).flat();
+	const rooms = findColumnsData(cell => cell === "rm#", sheetData).flat();
+	const soldiers = findColumnsData(cell => cell === "name", sheetData).flat();
+
+	const newGrid = [];
+
+	for (let i = 0; i < times.length; i++) {
+		newGrid.push([times[i], rooms[i], soldiers[i] || ""]);
+	}
+
+	console.log(newGrid);
+
+	return {
+		grid: newGrid,
+		impliedDate: cqDate
+	};
+}
+
 function reformatSheetData(sheetData, impliedDate) {
+	if(!impliedDate) throw "No implied date given.";
+
 	let currentImpliedDate = impliedDate;
 
 	const shiftLines = sheetData.map((line, idx) => {
@@ -88,6 +118,33 @@ function mergeShifts(...shiftArrs) {
 		...acc,
 		[s.date]: s
 	}), {}));
+}
+
+function findColumnsData(func, sheetData) {
+	const columns = [];
+	for (let i = 0; i < sheetData.length; i++) {
+		for (let j = 0; j < sheetData[i].length; j++) {
+			if(func(sheetData[i][j].toLowerCase(), i, j)) {
+				columns.push(slice2d(sheetData, i + 1, j, Infinity, j).flat());
+			}
+		}
+	}
+
+	return columns;
+}
+
+function slice2d(array, sx, sy, ex, ey) {
+	return array.slice(sx, ex + 1).map(i => i.slice(sy, ey + 1));
+}
+
+function findDateOnCQSheet(sheetData) {
+	for (let i = 0; i < sheetData.length; i++) {
+		if(
+			date = sheetData[i].find(cell => /^\d{1,2}-[a-z][a-z][a-z]/gi.test(cell.trim()))
+		) return date;
+	}
+
+	return null;
 }
 
 function checkShiftsValidness(data) {

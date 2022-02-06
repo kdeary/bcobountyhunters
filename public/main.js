@@ -51,6 +51,7 @@ lazyImageElems.forEach(lazyLoadImage);
 	initTrackerDateInput();
 
 	yourNameInputElem.value = CACHE.fetch('name', "").trim();
+	if(!yourNameInputElem.value) document.querySelector('#enterNameTooltip').style.display = "block";
 
 	const localShifts = processShifts(getLocalCQShifts() || []);
 	renderAll(localShifts);

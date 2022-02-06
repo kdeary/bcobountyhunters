@@ -127,8 +127,9 @@ formControls.csvFile.onchange = event => {
 
 	fileReader.onload = event => {
 		const grid = fileReader.result.split("\n").map(line => line.split(","));
-		const impliedDate = formControls.impliedDate.value ? dateValueToDate(formControls.impliedDate.value) : new Date();
-		const formattedGrid = reformatSheetData(grid, impliedDate);
+		let formImpliedDate = formControls.impliedDate.value ? dateValueToDate(formControls.impliedDate.value) : new Date();
+		let {grid: normalizedGrid, impliedDate} = normalizeSheetData(grid);
+		const formattedGrid = reformatSheetData(normalizedGrid, impliedDate || formImpliedDate);
 
 		cqSheetEditor.setData(formattedGrid);
 	};
