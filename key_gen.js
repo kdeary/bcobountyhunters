@@ -4,6 +4,7 @@ import fs from 'fs';
 const generateAccount = async (acme, accountSettings) => {
 	let accountKey;
 	let serverKey;
+	let serverPem;
 
 	let accountPemFile = await fs.promises.readFile('./cert/account_privkey.pem').then(r => r.toString()).catch(() => null);
 	let serverPemFile = await fs.promises.readFile('./cert/privkey.pem').then(r => r.toString()).catch(() => null);
@@ -23,9 +24,11 @@ const generateAccount = async (acme, accountSettings) => {
 	} else {
 		let serverKeypair = await Keypairs.generate({ kty: 'RSA', format: 'jwk' });
 		serverKey = serverKeypair.private;
-		let serverPem = await Keypairs.export({ jwk: serverKey });
+		serverPem = await Keypairs.export({ jwk: serverKey });
 		await fs.promises.writeFile('./cert/privkey.pem', serverPem, 'ascii');
 	}
+
+	serverPem ||= serverPemFile;
 
 	let account;
 	if(accountFile) {
