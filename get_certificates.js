@@ -31,9 +31,11 @@ const retrieveCerts = async ({domains}) => {
 
 	if(!certificate) {
 		console.log("Creating new certificates...");
-		pems = await createCerts({domains});
+		pems = await createCerts({domains}).catch(console.error);
+		console.log("Saving certs to JSONBin");
 		await saveCertsToJSONBin(pems);
 
+		console.log("Updating Heroku SSL");
 		await heroku.post(`/apps/${process.env.HEROKU_APP}/ssl-endpoints`, {
 			body: {
 				certificate_chain: pems.cert + '\n' + pems.chain + '\n',
@@ -42,11 +44,13 @@ const retrieveCerts = async ({domains}) => {
 			}
 		}).then(data => {
 			console.log("Successfully updated Heroku SSL", data);
-		});
+		}).catch(console.error);
 	}
 
 	await fs.promises.writeFile('./cert/privkey.pem', pems.privkey, 'ascii');
 	await fs.promises.writeFile('./cert/fullchain.pem', pems.cert + '\n' + pems.chain + '\n', 'ascii');
+
+	console.log("Wrote SSL certs to disk.");
 
 	return {
 		...pems,
@@ -70,6 +74,7 @@ const createCerts = async ({domains}) => {
 	});
 
 	await acme.init('https://acme-staging-v02.api.letsencrypt.org/directory');
+	console.log("Initiated ACME");
 
 	let accountObj = await fetchAccountFromJSONBin();
 	if(!accountObj) {
@@ -77,7 +82,7 @@ const createCerts = async ({domains}) => {
 		accountObj = await generateAccount(acme, {
 			subscriberEmail: pkg.author.email,
 			agreeToTerms: true
-		});
+		}).catch(console.error);
 		await saveAccountToJSONBin(accountObj);
 	}
 
@@ -85,22 +90,21 @@ const createCerts = async ({domains}) => {
 
 	console.info('Account:', account);
 
-	const csrDer = await CSR.csr({ jwk: serverKey, domains, encoding });
+	const csrDer = await CSR.csr({ jwk: serverKey, domains, encoding }).catch(console.error);
 	const csr = PEM.packBlock({ type: typ, bytes: csrDer });
 
 	const challenges = {
 		'http-01': webroot
 	};
 
+	console.log("Generating SSL certificates...");
 	const pems = await acme.certificates.create({
 		account,
 		accountKey,
 		csr,
 		domains,
 		challenges
-	});
-
-
+	}).catch(console.error);
 
 	return pems;
 };
