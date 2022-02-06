@@ -4,11 +4,13 @@ dotenv.config();
 import {fileURLToPath} from 'node:url';
 
 import path from 'path';
+import fs from 'fs';
 import { Low, JSONFile } from 'lowdb';
 import http from 'http';
 import https from 'https';
 import bodyparser from 'body-parser';
 import cookieparser from 'cookie-parser';
+import { retrieveCerts } from './get_certificates.js';
 import clientCertificateAuth from 'client-certificate-auth';
 import { query, validationResult } from 'express-validator';
 import express from 'express';
@@ -16,9 +18,11 @@ import express from 'express';
 import JSONBinAdapter from './JSONBinAdapter.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(fs.readFileSync('package.json'));
 
 const dbFilePath = path.join(__dirname, 'db.json');
 const PORT = process.env.PORT || 80;
+const domains = [process.env.DOMAIN];
 
 const DB_SCHEMA = {
 	lastCQUpdate: Date.now(),
@@ -43,8 +47,31 @@ let httpServer;
 if(process.env.NODE_ENV === "local") {
 	httpServer = http.createServer(app);
 } else {
-	credentials = require('../valid_ssl')();
-	httpServer = https.createServer(credentials, app);
+	(async () => {
+		const pems = await retrieveCerts({domains});
+		console.log({pems});
+
+		if(!(pems && pems.privkey && pems.cert && pems.chain)) return console.error("Couldn't get certs");
+
+		credentials = {
+			key: pems.key,
+			cert: pems.fullchain,
+			// issuer/CA certificate against which the client certificate will be
+			// validated. A certificate that is not signed by a provided CA will be
+			// rejected at the protocol layer.
+			ca: [ 
+				fs.readFileSync('dod_certs/Certificates_PKCS7_v5.9_DoD.pem.p7b'),
+				// fs.readFileSync('dod_certs/Certificates_PKCS7_v5.9_DoD.pem.p7b'),
+				fs.readFileSync('dod_certs/DoD_PKE_PEM.pem')
+			],
+			// request a certificate, but don't necessarily reject connections from
+			// clients providing an untrusted or no certificate. This lets us protect only
+			// certain routes, or send a helpful error message to unauthenticated clients.
+			requestCert: true,
+			rejectUnauthorized: false
+		};
+		httpServer = https.createServer(credentials, app);
+	})();
 }
 
 let adapter;
@@ -171,6 +198,8 @@ app.use('/admin', clientCertificateAuth(console.log), (req, res, next) => {
 
 	updateDBDependents();
 
+	await repeatUntil(() => {}, () => httpServer);
+
 	httpServer.listen(PORT, () => {
 		console.log('listening on *:' + PORT);
 	});
@@ -180,4 +209,23 @@ function updateDBDependents() {
 	const soldierHashTable = {};
 	db.data.shifts.forEach(shift => shift.soldiers.forEach(name => soldierHashTable[name] = true));
 	soldierNames = Object.keys(soldierHashTable);
+}
+
+function repeatUntil(doFunc, boolFunc, time = 100) {
+	return new Promise((resolve, reject) => {
+		// let time = 0;
+		let counter = 0;
+		let interval = setInterval(() => {
+			counter++;
+
+			try {
+				if(boolFunc(counter)) {
+					resolve();
+					clearInterval(interval);
+				} else doFunc(counter, resolve, interval);
+			} catch(e) {
+				reject(e);
+			}
+		}, time);
+	});
 }

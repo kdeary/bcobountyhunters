@@ -1,23 +1,67 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add lowdb
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add x509
 
 PATH: 
-  C:\Program Files (x86)\Cmder\bin;C:\Program Files (x86)\Cmder\vendor\conemu-maximus5;C:\Program Files (x86)\Cmder\vendor\conemu-maximus5\ConEmu;C:\Perl64\bin;C:\Users\Korbin Deary\AppData\Roaming\ActiveState\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\ImageMagick-7.0.8-Q16;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Git\cmd;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\Yarn\bin\;C:\ProgramData\chocolatey\bin;C:\MinGW\bin;C:\WINDOWS\System32\OpenSSH\;C:\TDM-GCC-32\bin;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python39\;C:\Users\Korbin Deary\.windows-build-tools\python27\;C:\Program Files (x86)\sox-14-4-2\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python37\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python37-32\;C:\Users\Korbin Deary\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Heroku\bin;C:\Program Files\Sublime Text 3;C:\Users\Korbin Deary\AppData\Local\atom\bin;C:\Program Files\MongoDB\Server\3.4\bin;C:\Users\Korbin Deary\AppData\Local\Yarn\bin;C:\Users\Korbin Deary\AppData\Local\.meteor;C:\Program Files (x86)\curl\bin;C:\Users\Korbin Deary\AppData\Local\Microsoft\WindowsApps;C:\Users\Korbin Deary\AppData\Roaming\npm;C:\Program Files\Docker Toolbox;;C:\Users\Korbin Deary\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\share\vim\vim74;C:\Program Files (x86)\Cmder\
+  C:\Program Files (x86)\Cmder\bin;C:\Program Files (x86)\Cmder\vendor\conemu-maximus5;C:\Program Files (x86)\Cmder\vendor\conemu-maximus5\ConEmu;C:\Python310\Scripts\;C:\Python310\;C:\Perl64\bin;C:\Users\Korbin Deary\AppData\Roaming\ActiveState\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\ImageMagick-7.0.8-Q16;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Git\cmd;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files (x86)\Yarn\bin\;C:\ProgramData\chocolatey\bin;C:\MinGW\bin;C:\WINDOWS\System32\OpenSSH\;C:\TDM-GCC-32\bin;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python39\Scripts\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python39\;C:\Users\Korbin Deary\.windows-build-tools\python27\;C:\Program Files (x86)\sox-14-4-2\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python37\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\Korbin Deary\AppData\Local\Programs\Python\Python37-32\;C:\Users\Korbin Deary\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Heroku\bin;C:\Program Files\Sublime Text 3;C:\Users\Korbin Deary\AppData\Local\atom\bin;C:\Program Files\MongoDB\Server\3.4\bin;C:\Users\Korbin Deary\AppData\Local\Yarn\bin;C:\Users\Korbin Deary\AppData\Local\.meteor;C:\Program Files (x86)\curl\bin;C:\Users\Korbin Deary\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Docker Toolbox;;C:\Users\Korbin Deary\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Korbin Deary\AppData\Roaming\npm;C:\Users\Korbin Deary\.dotnet\tools;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\share\vim\vim74;C:\Program Files (x86)\Cmder\
 
 Yarn version: 
   1.5.1
 
 Node version: 
-  12.18.0
+  16.13.2
 
 Platform: 
   win32 x64
 
 npm manifest: 
   {
+    "name": "cqtracker",
+    "version": "1.0.0",
+    "description": "B369 CQ Tracker",
+    "main": "index.js",
+    "devDependencies": {},
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/kdeary/bcobountyhunters.git"
+    },
+    "author": {
+      "name": "K. Deary",
+      "email": "korbin.deary45@gmail.com"
+    },
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/kdeary/bcobountyhunters/issues"
+    },
+    "homepage": "https://github.com/kdeary/bcobountyhunters#readme",
+    "type": "module",
+    "exports": "./index.js",
+    "scripts": {
+      "start": "node index.js",
+      "test": "nodemon index.js"
+    },
+    "engines": {
+      "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+    },
+    "nodemonConfig": {
+      "ignore": [
+        "db.json",
+        "keys/*",
+        "public/*"
+      ]
+    },
     "dependencies": {
+      "@octokit/core": "^3.5.1",
+      "@root/keypairs": "^0.10.3",
+      "acme": "^3.0.3",
+      "acme-http-01-webroot": "^3.0.0",
+      "client-certificate-auth": "^0.3.0",
+      "cookie-parser": "^1.4.6",
       "dotenv": "^14.2.0",
-      "express": "^4.17.2"
+      "express": "^4.17.2",
+      "express-validator": "^6.14.0",
+      "file-download": "^0.1.2",
+      "lowdb": "^3.0.0",
+      "node-fetch": "^3.2.0"
     }
   }
 
@@ -29,6 +73,125 @@ Lockfile:
   # yarn lockfile v1
   
   
+  "@octokit/auth-token@^2.4.4":
+    version "2.5.0"
+    resolved "https://registry.yarnpkg.com/@octokit/auth-token/-/auth-token-2.5.0.tgz#27c37ea26c205f28443402477ffd261311f21e36"
+    dependencies:
+      "@octokit/types" "^6.0.3"
+  
+  "@octokit/core@^3.5.1":
+    version "3.5.1"
+    resolved "https://registry.yarnpkg.com/@octokit/core/-/core-3.5.1.tgz#8601ceeb1ec0e1b1b8217b960a413ed8e947809b"
+    dependencies:
+      "@octokit/auth-token" "^2.4.4"
+      "@octokit/graphql" "^4.5.8"
+      "@octokit/request" "^5.6.0"
+      "@octokit/request-error" "^2.0.5"
+      "@octokit/types" "^6.0.3"
+      before-after-hook "^2.2.0"
+      universal-user-agent "^6.0.0"
+  
+  "@octokit/endpoint@^6.0.1":
+    version "6.0.12"
+    resolved "https://registry.yarnpkg.com/@octokit/endpoint/-/endpoint-6.0.12.tgz#3b4d47a4b0e79b1027fb8d75d4221928b2d05658"
+    dependencies:
+      "@octokit/types" "^6.0.3"
+      is-plain-object "^5.0.0"
+      universal-user-agent "^6.0.0"
+  
+  "@octokit/graphql@^4.5.8":
+    version "4.8.0"
+    resolved "https://registry.yarnpkg.com/@octokit/graphql/-/graphql-4.8.0.tgz#664d9b11c0e12112cbf78e10f49a05959aa22cc3"
+    dependencies:
+      "@octokit/request" "^5.6.0"
+      "@octokit/types" "^6.0.3"
+      universal-user-agent "^6.0.0"
+  
+  "@octokit/openapi-types@^11.2.0":
+    version "11.2.0"
+    resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-11.2.0.tgz#b38d7fc3736d52a1e96b230c1ccd4a58a2f400a6"
+  
+  "@octokit/request-error@^2.0.5", "@octokit/request-error@^2.1.0":
+    version "2.1.0"
+    resolved "https://registry.yarnpkg.com/@octokit/request-error/-/request-error-2.1.0.tgz#9e150357831bfc788d13a4fd4b1913d60c74d677"
+    dependencies:
+      "@octokit/types" "^6.0.3"
+      deprecation "^2.0.0"
+      once "^1.4.0"
+  
+  "@octokit/request@^5.6.0":
+    version "5.6.3"
+    resolved "https://registry.yarnpkg.com/@octokit/request/-/request-5.6.3.tgz#19a022515a5bba965ac06c9d1334514eb50c48b0"
+    dependencies:
+      "@octokit/endpoint" "^6.0.1"
+      "@octokit/request-error" "^2.1.0"
+      "@octokit/types" "^6.16.1"
+      is-plain-object "^5.0.0"
+      node-fetch "^2.6.7"
+      universal-user-agent "^6.0.0"
+  
+  "@octokit/types@^6.0.3", "@octokit/types@^6.16.1":
+    version "6.34.0"
+    resolved "https://registry.yarnpkg.com/@octokit/types/-/types-6.34.0.tgz#c6021333334d1ecfb5d370a8798162ddf1ae8218"
+    dependencies:
+      "@octokit/openapi-types" "^11.2.0"
+  
+  "@root/acme@^3.0.2":
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/@root/acme/-/acme-3.1.0.tgz#e40efbdd18efa6471fa1546d5ee26474ec2bfe27"
+    dependencies:
+      "@root/csr" "^0.8.1"
+      "@root/encoding" "^1.0.1"
+      "@root/keypairs" "^0.10.0"
+      "@root/pem" "^1.0.4"
+      "@root/request" "^1.6.1"
+      "@root/x509" "^0.7.2"
+  
+  "@root/asn1@^1.0.0":
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/@root/asn1/-/asn1-1.0.0.tgz#8748cf7b4497324de91a154b606ca1ddfe97c5d7"
+    dependencies:
+      "@root/encoding" "^1.0.1"
+  
+  "@root/csr@^0.8.1":
+    version "0.8.1"
+    resolved "https://registry.yarnpkg.com/@root/csr/-/csr-0.8.1.tgz#97a1b821331a4ed5895eee33bedb6ad49cdef74e"
+    dependencies:
+      "@root/asn1" "^1.0.0"
+      "@root/pem" "^1.0.4"
+      "@root/x509" "^0.7.2"
+  
+  "@root/encoding@^1.0.1":
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/@root/encoding/-/encoding-1.0.1.tgz#60cf3ccb9e2239226b30e8394c7a4a258a161c3e"
+  
+  "@root/keypairs@^0.10.0", "@root/keypairs@^0.10.3":
+    version "0.10.3"
+    resolved "https://registry.yarnpkg.com/@root/keypairs/-/keypairs-0.10.3.tgz#dc89c6996bbfcc085e11bc2dd70c35a164e17466"
+    dependencies:
+      "@root/encoding" "^1.0.1"
+      "@root/pem" "^1.0.4"
+      "@root/x509" "^0.7.2"
+  
+  "@root/mkdirp@^1.0.0":
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/@root/mkdirp/-/mkdirp-1.0.0.tgz#f200e29568d711d3357151af0d2648e7eaf21b6f"
+  
+  "@root/pem@^1.0.4":
+    version "1.0.4"
+    resolved "https://registry.yarnpkg.com/@root/pem/-/pem-1.0.4.tgz#9ecc3419c0a05c92b8ecbfe0a41f474970f8c72f"
+  
+  "@root/request@^1.6.1":
+    version "1.8.1"
+    resolved "https://registry.yarnpkg.com/@root/request/-/request-1.8.1.tgz#eba3e367ef862f302df6777a746c9fb6b581841c"
+  
+  "@root/x509@^0.7.2":
+    version "0.7.2"
+    resolved "https://registry.yarnpkg.com/@root/x509/-/x509-0.7.2.tgz#422ca7e46c09f5ddf3af86306383778eb004ace1"
+    dependencies:
+      "@root/asn1" "^1.0.0"
+      "@root/encoding" "^1.0.1"
+  
   accepts@~1.3.7:
     version "1.3.7"
     resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.7.tgz#531bc726517a3b2b41f850021c6cc15eaab507cd"
@@ -36,9 +199,25 @@ Lockfile:
       mime-types "~2.1.24"
       negotiator "0.6.2"
   
+  acme-http-01-webroot@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/acme-http-01-webroot/-/acme-http-01-webroot-3.0.0.tgz#ec3a0e3c6edd275f189492feb8c2f9f18255ff0a"
+    dependencies:
+      "@root/mkdirp" "^1.0.0"
+  
+  acme@^3.0.3:
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/acme/-/acme-3.0.3.tgz#e3dd9086027118d2cda7bf72572446c02e0696ea"
+    dependencies:
+      "@root/acme" "^3.0.2"
+  
   array-flatten@1.1.1:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
+  
+  before-after-hook@^2.2.0:
+    version "2.2.2"
+    resolved "https://registry.yarnpkg.com/before-after-hook/-/before-after-hook-2.2.2.tgz#a6e8ca41028d90ee2c24222f201c90956091613e"
   
   body-parser@1.19.1:
     version "1.19.1"
@@ -59,6 +238,10 @@ Lockfile:
     version "3.1.1"
     resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.1.tgz#3f018291cb4cbad9accb6e6970bca9c8889e879a"
   
+  client-certificate-auth@^0.3.0:
+    version "0.3.0"
+    resolved "https://registry.yarnpkg.com/client-certificate-auth/-/client-certificate-auth-0.3.0.tgz#2eae4deead76b92220bd2dab82254a03479bd43b"
+  
   content-disposition@0.5.4:
     version "0.5.4"
     resolved "https://registry.yarnpkg.com/content-disposition/-/content-disposition-0.5.4.tgz#8b82b4efac82512a02bb0b1dcec9d2c5e8eb5bfe"
@@ -69,6 +252,13 @@ Lockfile:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   
+  cookie-parser@^1.4.6:
+    version "1.4.6"
+    resolved "https://registry.yarnpkg.com/cookie-parser/-/cookie-parser-1.4.6.tgz#3ac3a7d35a7a03bbc7e365073a26074824214594"
+    dependencies:
+      cookie "0.4.1"
+      cookie-signature "1.0.6"
+  
   cookie-signature@1.0.6:
     version "1.0.6"
     resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
@@ -76,6 +266,10 @@ Lockfile:
   cookie@0.4.1:
     version "0.4.1"
     resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.1.tgz#afd713fe26ebd21ba95ceb61f9a8116e50a537d1"
+  
+  data-uri-to-buffer@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-4.0.0.tgz#b5db46aea50f6176428ac05b73be39a57701a64b"
   
   debug@2.6.9:
     version "2.6.9"
@@ -86,6 +280,10 @@ Lockfile:
   depd@~1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
+  
+  deprecation@^2.0.0:
+    version "2.3.1"
+    resolved "https://registry.yarnpkg.com/deprecation/-/deprecation-2.3.1.tgz#6368cbdb40abf3373b525ac87e4a260c3a700919"
   
   destroy@~1.0.4:
     version "1.0.4"
@@ -110,6 +308,13 @@ Lockfile:
   etag@~1.8.1:
     version "1.8.1"
     resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
+  
+  express-validator@^6.14.0:
+    version "6.14.0"
+    resolved "https://registry.yarnpkg.com/express-validator/-/express-validator-6.14.0.tgz#8ee7a32bf1ffcf2573db5f17c9cad279698e5d41"
+    dependencies:
+      lodash "^4.17.21"
+      validator "^13.7.0"
   
   express@^4.17.2:
     version "4.17.2"
@@ -146,6 +351,19 @@ Lockfile:
       utils-merge "1.0.1"
       vary "~1.1.2"
   
+  fetch-blob@^3.1.2, fetch-blob@^3.1.4:
+    version "3.1.4"
+    resolved "https://registry.yarnpkg.com/fetch-blob/-/fetch-blob-3.1.4.tgz#e8c6567f80ad7fc22fd302e7dcb72bafde9c1717"
+    dependencies:
+      node-domexception "^1.0.0"
+      web-streams-polyfill "^3.0.3"
+  
+  file-download@^0.1.2:
+    version "0.1.2"
+    resolved "https://registry.yarnpkg.com/file-download/-/file-download-0.1.2.tgz#08a9d7f83b9d9688988eba3a1d2d8f644f3a5d2f"
+    dependencies:
+      mkdirp "^0.5.0"
+  
   finalhandler@~1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/finalhandler/-/finalhandler-1.1.2.tgz#b7e7d000ffd11938d0fdb053506f6ebabe9f587d"
@@ -157,6 +375,12 @@ Lockfile:
       parseurl "~1.3.3"
       statuses "~1.5.0"
       unpipe "~1.0.0"
+  
+  formdata-polyfill@^4.0.10:
+    version "4.0.10"
+    resolved "https://registry.yarnpkg.com/formdata-polyfill/-/formdata-polyfill-4.0.10.tgz#24807c31c9d402e002ab3d8c720144ceb8848423"
+    dependencies:
+      fetch-blob "^3.1.2"
   
   forwarded@0.2.0:
     version "0.2.0"
@@ -190,6 +414,20 @@ Lockfile:
     version "1.9.1"
     resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.9.1.tgz#bff38543eeb8984825079ff3a2a8e6cbd46781b3"
   
+  is-plain-object@^5.0.0:
+    version "5.0.0"
+    resolved "https://registry.yarnpkg.com/is-plain-object/-/is-plain-object-5.0.0.tgz#4427f50ab3429e9025ea7d52e9043a9ef4159344"
+  
+  lodash@^4.17.21:
+    version "4.17.21"
+    resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  
+  lowdb@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/lowdb/-/lowdb-3.0.0.tgz#c10ab4e7eb86f1cbe255e35e60ffb0c6f42049e0"
+    dependencies:
+      steno "^2.1.0"
+  
   media-typer@0.3.0:
     version "0.3.0"
     resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
@@ -216,6 +454,16 @@ Lockfile:
     version "1.6.0"
     resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   
+  minimist@^1.2.5:
+    version "1.2.5"
+    resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
+  
+  mkdirp@^0.5.0:
+    version "0.5.5"
+    resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"
+    dependencies:
+      minimist "^1.2.5"
+  
   ms@2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -228,11 +476,35 @@ Lockfile:
     version "0.6.2"
     resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
   
+  node-domexception@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/node-domexception/-/node-domexception-1.0.0.tgz#6888db46a1f71c0b76b3f7555016b63fe64766e5"
+  
+  node-fetch@^2.6.7:
+    version "2.6.7"
+    resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
+    dependencies:
+      whatwg-url "^5.0.0"
+  
+  node-fetch@^3.2.0:
+    version "3.2.0"
+    resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-3.2.0.tgz#59390db4e489184fa35d4b74caf5510e8dfbaf3b"
+    dependencies:
+      data-uri-to-buffer "^4.0.0"
+      fetch-blob "^3.1.4"
+      formdata-polyfill "^4.0.10"
+  
   on-finished@~2.3.0:
     version "2.3.0"
     resolved "https://registry.yarnpkg.com/on-finished/-/on-finished-2.3.0.tgz#20f1336481b083cd75337992a16971aa2d906947"
     dependencies:
       ee-first "1.1.1"
+  
+  once@^1.4.0:
+    version "1.4.0"
+    resolved "https://registry.yarnpkg.com/once/-/once-1.4.0.tgz#583b1aa775961d4b113ac17d9c50baef9dd76bd1"
+    dependencies:
+      wrappy "1"
   
   parseurl@~1.3.3:
     version "1.3.3"
@@ -309,9 +581,17 @@ Lockfile:
     version "1.5.0"
     resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   
+  steno@^2.1.0:
+    version "2.1.0"
+    resolved "https://registry.yarnpkg.com/steno/-/steno-2.1.0.tgz#05a9c378ce42ed04f642cda6fcb41787a10e4e33"
+  
   toidentifier@1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.1.tgz#3be34321a88a820ed1bd80dfaa33e479fbb8dd35"
+  
+  tr46@~0.0.3:
+    version "0.0.3"
+    resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   
   type-is@~1.6.18:
     version "1.6.18"
@@ -319,6 +599,10 @@ Lockfile:
     dependencies:
       media-typer "0.3.0"
       mime-types "~2.1.24"
+  
+  universal-user-agent@^6.0.0:
+    version "6.0.0"
+    resolved "https://registry.yarnpkg.com/universal-user-agent/-/universal-user-agent-6.0.0.tgz#3381f8503b251c0d9cd21bc1de939ec9df5480ee"
   
   unpipe@1.0.0, unpipe@~1.0.0:
     version "1.0.0"
@@ -328,16 +612,96 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   
+  validator@^13.7.0:
+    version "13.7.0"
+    resolved "https://registry.yarnpkg.com/validator/-/validator-13.7.0.tgz#4f9658ba13ba8f3d82ee881d3516489ea85c0857"
+  
   vary@~1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
+  
+  web-streams-polyfill@^3.0.3:
+    version "3.2.0"
+    resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-3.2.0.tgz#a6b74026b38e4885869fb5c589e90b95ccfc7965"
+  
+  webidl-conversions@^3.0.0:
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-3.0.1.tgz#24534275e2a7bc6be7bc86611cc16ae0a5654871"
+  
+  whatwg-url@^5.0.0:
+    version "5.0.0"
+    resolved "https://registry.yarnpkg.com/whatwg-url/-/whatwg-url-5.0.0.tgz#966454e8765462e37644d3626f6742ce8b70965d"
+    dependencies:
+      tr46 "~0.0.3"
+      webidl-conversions "^3.0.0"
+  
+  wrappy@1:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
 
 Trace: 
-  Error: Found incompatible module
-      at new MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
-      at checkOne (C:\Program Files (x86)\Yarn\lib\cli.js:62444:11)
-      at Object.check (C:\Program Files (x86)\Yarn\lib\cli.js:62463:5)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:22803:73
-      at Generator.next (<anonymous>)
-      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
-      at C:\Program Files (x86)\Yarn\lib\cli.js:109:13
+  Error: C:\Users\Korbin Deary\Desktop\CQTracker\node_modules\x509: Command failed.
+  Exit code: 1
+  Command: C:\WINDOWS\system32\cmd.exe
+  Arguments: /d /s /c node-gyp rebuild
+  Directory: C:\Users\Korbin Deary\Desktop\CQTracker\node_modules\x509
+  Output:
+  CLINK C:\Users\Korbin Deary\Desktop\CQTracker\node_modules\x509>if not defined npm_config_node_gyp (node "C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin\\..\..\node_modules\node-gyp\bin\node-gyp.js" rebuild )  else (node "" rebuild ) 
+  gyp info it worked if it ends with ok
+  gyp info using node-gyp@8.3.0
+  gyp info using node@16.13.2 | win32 | x64
+  gyp info find Python using Python version 3.10.2 found at "C:\Python310\python.exe"
+  gyp ERR! find VS 
+  gyp ERR! find VS msvs_version was set from command line or npm config
+  gyp ERR! find VS - looking for Visual Studio version 2017
+  gyp ERR! find VS VCINSTALLDIR not set, not running in VS Command Prompt
+  gyp ERR! find VS checking VS2019 (16.11.32106.194) found at:
+  gyp ERR! find VS "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools"
+  gyp ERR! find VS - found "Visual Studio C++ core features"
+  gyp ERR! find VS - found VC++ toolset: v142
+  gyp ERR! find VS - found Windows SDK: 10.0.18362.0
+  gyp ERR! find VS - msvs_version does not match this version
+  gyp ERR! find VS checking VS2017 (15.4.27004.2009) found at:
+  gyp ERR! find VS "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community"
+  gyp ERR! find VS - found "Visual Studio C++ core features"
+  gyp ERR! find VS - missing any VC++ toolset
+  gyp ERR! find VS could not find a version of Visual Studio 2017 or newer to use
+  gyp ERR! find VS looking for Visual Studio 2015
+  gyp ERR! find VS - not found
+  gyp ERR! find VS not looking for VS2013 as it is only supported up to Node.js 8
+  gyp ERR! find VS 
+  gyp ERR! find VS valid versions for msvs_version:
+  gyp ERR! find VS - "2019"
+  gyp ERR! find VS - "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools"
+  gyp ERR! find VS 
+  gyp ERR! find VS **************************************************************
+  gyp ERR! find VS You need to install the latest version of Visual Studio
+  gyp ERR! find VS including the "Desktop development with C++" workload.
+  gyp ERR! find VS For more information consult the documentation at:
+  gyp ERR! find VS https://github.com/nodejs/node-gyp#on-windows
+  gyp ERR! find VS **************************************************************
+  gyp ERR! find VS 
+  gyp ERR! configure error 
+  gyp ERR! stack Error: Could not find any Visual Studio installation to use
+  gyp ERR! stack     at VisualStudioFinder.fail (C:\Program Files\nodejs\node_modules\npm\node_modules\node-gyp\lib\find-visualstudio.js:121:47)
+  gyp ERR! stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\node-gyp\lib\find-visualstudio.js:74:16
+  gyp ERR! stack     at VisualStudioFinder.findVisualStudio2013 (C:\Program Files\nodejs\node_modules\npm\node_modules\node-gyp\lib\find-visualstudio.js:351:14)
+  gyp ERR! stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\node-gyp\lib\find-visualstudio.js:70:14
+  gyp ERR! stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\node-gyp\lib\find-visualstudio.js:372:16
+  gyp ERR! stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\node-gyp\lib\util.js:54:7
+  gyp ERR! stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\node-gyp\lib\util.js:33:16
+  gyp ERR! stack     at ChildProcess.exithandler (node:child_process:404:5)
+  gyp ERR! stack     at ChildProcess.emit (node:events:390:28)
+  gyp ERR! stack     at maybeClose (node:internal/child_process:1064:16)
+  gyp ERR! System Windows_NT 10.0.18362
+  gyp ERR! command "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\node_modules\\node-gyp\\bin\\node-gyp.js" "rebuild"
+  gyp ERR! cwd C:\Users\Korbin Deary\Desktop\CQTracker\node_modules\x509
+  gyp ERR! node -v v16.13.2
+  gyp ERR! node-gyp -v v8.3.0
+  gyp ERR! not ok
+      at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
+      at new ProcessTermError (C:\Program Files (x86)\Yarn\lib\cli.js:226:113)
+      at ChildProcess.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:30281:17)
+      at ChildProcess.emit (node:events:390:28)
+      at maybeClose (node:internal/child_process:1064:16)
+      at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)
