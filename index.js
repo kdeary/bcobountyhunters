@@ -8,7 +8,7 @@ import fs from 'fs';
 import { Low, JSONFile } from 'lowdb';
 import http from 'http';
 import https from 'https';
-import httpClose from 'http-close';
+import httpShutdown from 'http-shutdown';
 import bodyparser from 'body-parser';
 import cookieparser from 'cookie-parser';
 import { retrieveCerts } from './get_certificates.js';
@@ -54,7 +54,7 @@ if(process.env.NODE_ENV === "local") {
 	httpServer = http.createServer(app);
 } else {
 	httpServer = http.createServer(app);
-	httpClose({ timeout: 2000 }, httpServer);
+	httpServer = httpShutdown(httpServer);
 
 	(async () => {
 		const pems = await retrieveCerts({domains});
@@ -80,7 +80,9 @@ if(process.env.NODE_ENV === "local") {
 			rejectUnauthorized: false
 		};
 
-		httpServer.close(() => {
+		httpServer.shutdown(err => {
+			if(err) throw err;
+			
 			setTimeout(() => {
 				httpServer = https.createServer(credentials, app);
 				startListener(httpServer);
