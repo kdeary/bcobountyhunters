@@ -36,6 +36,8 @@ const retrieveCerts = async ({domains}) => {
 		console.log("Saving certs to JSONBin");
 		await saveCertsToJSONBin(certs);
 
+		console.log(certs);
+
 		console.log("Updating Heroku SSL");
 		await heroku.post(`/apps/${process.env.HEROKU_APP}/ssl-endpoints`, {
 			body: {
@@ -69,7 +71,7 @@ const createCerts = async ({domains}) => {
 		}
 	});
 
-	await acme.init('https://acme-staging-v02.api.letsencrypt.org/directory');
+	await acme.init('https://acme-v02.api.letsencrypt.org/directory');
 	console.log("Initiated ACME");
 
 	let accountObj = await fetchAccountFromJSONBin();
