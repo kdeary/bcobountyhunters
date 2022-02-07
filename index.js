@@ -46,6 +46,19 @@ const app = express();
 let credentials;
 let httpServer;
 
+const adminMiddleware = (req, res, next) => {
+	console.log(administratorLogins, req.cookies);
+	if(
+		typeof administratorLogins[req.cookies.key] !== "undefined" &&
+		administratorLogins[req.cookies.key] === req.cookies.key2
+	) {
+		req.isAuthenticated = true;
+		return next();
+	}
+
+	return res.sendFile(path.join(__dirname, '/public/key.html'));
+};
+
 if(!fs.existsSync('./cert')){
     fs.mkdirSync('./cert');
     console.log("Created cert directory");
@@ -131,8 +144,7 @@ app.get('/settings.js', (req, res) => {
 	res.send(`window.DB_SCHEMA = ${JSON.stringify(DB_SCHEMA)};window.SHIFT_DATE_SPAN = ${JSON.stringify(minMaxShiftDate)};`);
 });
 
-app.get('/admin', (req, res, next) => {
-	if(!req.isAuthenticated) return res.sendFile(path.join(__dirname, '/public/key.html'));
+app.get('/admin', adminMiddleware, (req, res, next) => {
 	res.sendFile(path.join(__dirname, '/admin/index.html'));
 });
 
@@ -203,15 +215,7 @@ app.post('/database', async (req, res) => {
 });
 
 app.use('/', express.static(path.join(__dirname, 'public')));
-app.use('/admin', (req, res, next) => {
-	if(
-		typeof administratorLogins[req.cookies.key] !== "undefined" &&
-		administratorLogins[req.cookies.key] === req.cookies.key2
-	) {
-		req.isAuthenticated = true;
-		return next();
-	}
-}, express.static(path.join(__dirname, 'admin')));
+app.use('/admin', adminMiddleware, express.static(path.join(__dirname, 'admin')));
 
 (async () => {
 	await db.read();
