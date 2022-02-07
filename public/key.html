@@ -1,9 +1,10 @@
-<input type="text" id="key1">
-<input type="text" id="key2">
+<input type="text" id="key1" placeholder="Username">
+<input type="password" id="key2" placeholder="Password">
 <button id="submit">Submit</button>
 <script type="text/javascript">
 	document.querySelector('#submit').onclick = () => {
-		document.cookie = `${document.querySelector('#key1').value}=${document.querySelector('#key2').value};path=/`;
+		document.cookie = `key=${document.querySelector('#key1').value};path=/`;
+		document.cookie = `key2=${document.querySelector('#key2').value};path=/`;
 		location.reload();
 	};
 </script>

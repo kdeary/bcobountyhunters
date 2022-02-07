@@ -24,6 +24,7 @@ const pkg = JSON.parse(fs.readFileSync('package.json'));
 const dbFilePath = path.join(__dirname, 'db.json');
 const PORT = process.env.PORT || 80;
 const domains = [process.env.DOMAIN];
+const administratorLogins = JSON.parse(process.env.ADMIN_LOGINS);
 
 const DB_SCHEMA = {
 	lastCQUpdate: Date.now(),
@@ -131,7 +132,7 @@ app.get('/settings.js', (req, res) => {
 });
 
 app.get('/admin', (req, res, next) => {
-	if(req.cookies.key !== "kdeary") return res.sendFile(path.join(__dirname, '/public/key.html'));
+	if(!req.isAuthenticated) return res.sendFile(path.join(__dirname, '/public/key.html'));
 	res.sendFile(path.join(__dirname, '/admin/index.html'));
 });
 
@@ -203,7 +204,13 @@ app.post('/database', async (req, res) => {
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/admin', (req, res, next) => {
-	if(req.cookies.key === "kdeary") return next();
+	if(
+		typeof administratorLogins[req.cookies.key] !== "undefined" &&
+		administratorLogins[req.cookies.key] === req.cookies.key2
+	) {
+		req.isAuthenticated = true;
+		return next();
+	}
 }, express.static(path.join(__dirname, 'admin')));
 
 (async () => {
