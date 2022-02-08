@@ -47,6 +47,8 @@ formControls.impliedDate.value = dateToYYYYMMDD(new Date());
 		cqSheetEditor.setData(shiftsToSheetData(LOCAL_DB.shifts));
 
 		resizeShiftEditorTable();
+
+		window.onbeforeunload = () => true;
 	});
 })();
 
@@ -57,6 +59,7 @@ formControls.updateLastUpdate.addEventListener('click', () => {
 });
 
 formControls.updateDatabase.addEventListener('click', () => {
+	if(!confirm("Are you sure you want to publish your changes?")) return;
 	updateLocalDB({});
 
 	fetch('/database', {

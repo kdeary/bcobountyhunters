@@ -194,12 +194,12 @@ async (req, res) => {
 	});
 });
 
-app.get('/database', async (req, res) => {
+app.get('/database', adminMiddleware, async (req, res) => {
 	await db.read();
 	res.json(db.data);
 });
 
-app.post('/database', async (req, res) => {
+app.post('/database', adminMiddleware, async (req, res) => {
 	if(!req.body.database) return {err: "Empty Database"};
 
 	await db.read();
