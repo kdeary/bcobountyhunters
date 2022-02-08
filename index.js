@@ -47,7 +47,6 @@ let credentials;
 let httpServer;
 
 const adminMiddleware = (req, res, next) => {
-	console.log(administratorLogins, req.cookies);
 	if(
 		typeof administratorLogins[req.cookies.key] !== "undefined" &&
 		administratorLogins[req.cookies.key] === req.cookies.key2

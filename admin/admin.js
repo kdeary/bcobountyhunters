@@ -44,9 +44,23 @@ formControls.impliedDate.value = dateToYYYYMMDD(new Date());
 		databaseEditor.set(json);
 		LOCAL_DB = json;
 
-		cqSheetEditor.setData(shiftsToSheetData(LOCAL_DB.shifts));
-
+		cqSheetEditor.setData([[''],[''],['']]);
 		resizeShiftEditorTable();
+
+		const shiftsDateRange = [
+			LOCAL_DB.shifts.reduce((acc, val) => val.date < acc ? val.date : acc, Date.now()),
+			LOCAL_DB.shifts.reduce((acc, val) => val.date > acc ? val.date : acc, Date.now())
+		];
+
+		console.log(shiftsDateRange);
+
+		formControls.shiftEditorTargetDateMin.min = dateToYYYYMMDD(shiftsDateRange[0]);
+		formControls.shiftEditorTargetDateMin.max = dateToYYYYMMDD(shiftsDateRange[1]);
+		formControls.shiftEditorTargetDateMax.min = dateToYYYYMMDD(shiftsDateRange[0]);
+		formControls.shiftEditorTargetDateMax.max = dateToYYYYMMDD(shiftsDateRange[1]);
+
+		formControls.shiftEditorTargetDateMin.value = dateToYYYYMMDD(new Date());
+		formControls.shiftEditorTargetDateMax.value = dateToYYYYMMDD(new Date());
 
 		window.onbeforeunload = () => true;
 	});
@@ -114,7 +128,19 @@ formControls.replaceShifts.addEventListener('click', shiftsBtnHandler({
 
 formControls.updateShiftEditor.addEventListener('click', () => {
 	if(!confirm("Are you sure you want to replace the editor with the current shifts? This action may delete unsaved shifts.")) return;
-	cqSheetEditor.setData(shiftsToSheetData(LOCAL_DB.shifts));
+
+	const targetDateRange = [
+		dateValueToDate(formControls.shiftEditorTargetDateMin.value),
+		editDate(dateValueToDate(formControls.shiftEditorTargetDateMax.value), {
+			hours: 23,
+			minutes: 59,
+			seconds: 59
+		})
+	];
+
+	const filteredShifts = LOCAL_DB.shifts.filter(s => s.date > targetDateRange[0] && s.date < targetDateRange[1]);
+
+	cqSheetEditor.setData(shiftsToSheetData(filteredShifts));
 	showStatus("info", "Updated Shifts Editor with database shifts.");
 });
 
@@ -142,7 +168,11 @@ formControls.csvFile.onchange = event => {
 
 function resizeShiftEditorTable() {
 	const boundingBox = shiftEditorContainer.getBoundingClientRect();
-	const rowHeaderIndexWidth = document.querySelector('.jexcel_row').getBoundingClientRect().width;
+	const jexcelRowElem = document.querySelector('.jexcel_row');
+
+	if(!jexcelRowElem) return setTimeout(resizeShiftEditorTable, 3000);
+
+	const rowHeaderIndexWidth = jexcelRowElem.getBoundingClientRect().width;
 
 	for (let i = 2; i >= 0; i--) {
 		cqSheetEditor.setWidth(i, (boundingBox.width - rowHeaderIndexWidth - 10) / 3);
