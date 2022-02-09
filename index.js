@@ -47,7 +47,7 @@ let credentials;
 let httpServer;
 
 const adminMiddleware = (req, res, next) => {
-	const adminUsername = req.cookies.key.toLowerCase();
+	const adminUsername = (req.cookies.key || "").toLowerCase();
 
 	if(
 		typeof administratorLogins[adminUsername] !== "undefined" &&
