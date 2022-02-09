@@ -47,9 +47,11 @@ let credentials;
 let httpServer;
 
 const adminMiddleware = (req, res, next) => {
+	const adminUsername = req.cookies.key.toLowerCase();
+
 	if(
-		typeof administratorLogins[req.cookies.key] !== "undefined" &&
-		administratorLogins[req.cookies.key] === req.cookies.key2
+		typeof administratorLogins[adminUsername] !== "undefined" &&
+		administratorLogins[adminUsername] === req.cookies.key2
 	) {
 		req.isAuthenticated = true;
 		return next();
@@ -215,6 +217,7 @@ app.post('/database', adminMiddleware, async (req, res) => {
 
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminMiddleware, express.static(path.join(__dirname, 'admin')));
+app.use('/manuals', adminMiddleware, express.static(path.join(__dirname, 'manuals')));
 
 (async () => {
 	await db.read();
