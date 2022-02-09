@@ -41,10 +41,6 @@
 					<div class="shift-editor-container">
 						
 					</div>
-					<button class="btn btn-info btn-lg" title="Merges database's shifts with the editor's shifts." data-control="mergeShifts">Merge Shifts</button>
-					<button class="btn btn-primary btn-lg" title="Replaces database's shifts with the editors's shifts." data-control="replaceShifts">Replace Shifts</button>
-					<button class="btn btn-secondary btn-lg" title="Reformats the sheet editor data." data-control="reformatEditor">Reformat</button>
-
 					<div class="input-group mt-2" title="Updates the editor with database's shifts at a certain date">
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="targetLabel">Target Date</span>
@@ -53,9 +49,12 @@
 						<span class="input-group-text">to</span>
 						<input type="date" class="form-control" data-control="shiftEditorTargetDateMax" aria-label="CQ Shifts Target Date Maximum" aria-describedby="targetLabel">
 						<div class="input-group-append">
-							<button class="btn btn-secondary" data-control="updateShiftEditor" type="button">Update Editor</button>
+							<button class="btn btn-secondary" data-control="updateShiftEditor" type="button">Import Shifts</button>
 						</div>
 					</div>
+					<button class="btn btn-info btn-lg" title="Merges database's shifts with the editor's shifts." data-control="mergeShifts">Merge Shifts</button>
+					<button class="btn btn-primary btn-lg" title="Replaces database's shifts with the editors's shifts." data-control="replaceShifts">Replace Shifts</button>
+					<button class="btn btn-secondary btn-lg" title="Reformats the sheet editor data." data-control="reformatEditor">Reformat</button>
 
 					<hr>
 					<h3>Database Controls</h3>
